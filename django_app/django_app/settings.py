@@ -27,7 +27,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # connecting to stripe's api
-    'payments.apps.PaymentsConfig',
+    'forSale',
+
+    # for resizing images on the fly
+    "stdimage"
 ]
 
 
@@ -118,6 +121,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# this is where it saves the images, they'll have their
+# own directory under a folder called "media"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media_images')
+
+# tells the browser where to look in our app(s)
+MEDIA_URL = 'media_images/'
+
 
 
 # Stripe Settings

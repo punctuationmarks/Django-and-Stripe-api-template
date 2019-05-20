@@ -27,29 +27,33 @@ from django.conf import settings
 from django.views.generic.base import TemplateView
 from django.shortcuts import render
 
+from .models import ItemsForSale
+
+
 # grabbing secret key from settings.py
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
-class HomePageView(TemplateView):
-    template_name = 'payments/home.html'
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['key'] = settings.STRIPE_PUBLISHABLE_KEY
-        return context
+
+def ForSalePage(request):
+    context = {
+        'items': ItemsForSale.objects.all(),
+        'key': settings.STRIPE_PUBLISHABLE_KEY,
+        }
+    return render(request, 'forSale/sale_page.html', context)
 
 
-# set dollar amount
-def charge_5_through_stripe(request):
+def charge_through_stripe(request):
     if request.method == 'POST':
         charged = stripe.Charge.create(
-            amount=500,
+            amount= request.POST['data-amount'],
             currency='usd',
             description='Charge through Django with Stripe API',
             source=request.POST['stripeToken']
         )
-        return render(request, 'payments/charge_sucessful.html')
+        return render(request, 'forSale/charge_sucessful.html')
 
 
+        # set dollar amount
 def charge_10_through_stripe(request):
     if request.method == 'POST':
         charged = stripe.Charge.create(
@@ -58,4 +62,4 @@ def charge_10_through_stripe(request):
             description='Charge through Django with Stripe API',
             source=request.POST['stripeToken']
         )
-        return render(request, 'payments/charge_sucessful.html')
+        return render(request, 'forSale/charge_sucessful.html')

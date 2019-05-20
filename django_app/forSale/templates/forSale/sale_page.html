@@ -1,0 +1,50 @@
+{% extends "forSale/base.html"%}
+{% block content %}
+
+<h1>Payment Processing 101 with Stripe and Django</h1>
+<div class="home_page_text container">
+
+<p>For psuedo cards to try, Stripe has this <a href="https://stripe.com/docs/testing#cards">here</a>
+  This is a basic, supersuper created page with
+</p>
+</div>
+<!-- templates/home.html -->
+<div class="flexcontainer">
+
+  {% for item in items %}
+  <section class="individual_product">
+    <h2>{{ item.title }}</h2>
+    <img src="{{ item.image.large.url }}" alt="{{ item.image.title }}">
+    <!-- Adding a CSRF_TOKEN and form to accept Stripe payments -->
+    <h4>Buy for ${{ item.price_displayed }}</h4>
+    <form class="" action="{% url 'charge_sucessful' %}" method="post">
+      {% csrf_token %}
+      <script src="https://checkout.stripe.com/checkout.js"
+      class="stripe-button"
+      data-key="{{ key }}"
+      data-description="Fiat currency charge"
+      data-amount="{{ item.price }}"
+      data-locale="auto">
+      </script>
+    </form>
+  </section>
+{% endfor %}
+
+<section class="individual_product">
+  <h2>Buy this for set price at $10.00 </h2>
+  <img src="https://placeimg.com/400/300/animals" alt="Animal for sale ten bux">
+  <!-- Adding a CSRF_TOKEN and form to accept Stripe payments -->
+  <form class="" action="{% url 'charge_10_sucessful' %}" method="post">
+    {% csrf_token %}
+    <script src="https://checkout.stripe.com/checkout.js"
+    class="stripe-button"
+    data-key="{{ key }}"
+    data-description="Fiat currency charge"
+    data-amount="1000"
+    data-locale="auto">
+    </script>
+  </form>
+</section>
+
+</div>
+{% endblock content %}

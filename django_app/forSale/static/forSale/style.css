@@ -1,0 +1,32 @@
+@media(min-width:468px){
+    .flexcontainer{
+      display:flex;
+      align-items:flex-start;
+      flex-direction:row;
+      flex-wrap: wrap;
+    }
+  }
+
+
+a{
+  text-decoration: underline;
+  color: black;
+}
+
+
+section.individual_product{
+  padding: 10px;
+}
+
+.container{
+  width:100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-right:5px;
+  padding-left: 5px;
+
+}
+
+.home_page_text{
+  text-align: center
+}
